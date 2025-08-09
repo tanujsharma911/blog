@@ -1,0 +1,1 @@
+pnpm add tailwindcss @tailwindcss/vite -D
