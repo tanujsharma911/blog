@@ -121,12 +121,12 @@ class Service {
     }
 
     getFilePreview(fileId) {
-        return this.storage.getFilePreview(
+        return this.storage.getFileView(
             config.appwriteBucketId, // bucketId
             fileId, // fileId
         );
     }
-    
+
 }
 
 const service = new Service();

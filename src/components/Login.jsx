@@ -30,20 +30,20 @@ function Login() {
 
     return (
         <div>
-            <div className="relative flex flex-col rounded-xl bg-transparent">
-                <h4 className="block text-xl font-medium text-slate-800">
+            <div className="relative flex flex-col justify-center mt-10 rounded-xl bg-transparent">
+                <h1 className="block text-4xl text-center font-semibold text-slate-900">
                     Login
-                </h4>
+                </h1>
                 {error && <p className="text-slate-500 font-light">
                     {error}
                 </p>}
-                <form onSubmit={handleSubmit(login)} className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+                <form onSubmit={handleSubmit(login)} className="mt-8 mx-auto mb-2 w-sm">
                     <div className="mb-1 flex flex-col gap-6">
                         <div className="w-full max-w-sm min-w-[200px]">
                             <Input className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
                                 label="Your Email"
                                 type="email"
-                                placeholder="name@email.com"
+                                placeholder="hello@email.com"
                                 required={true}
                                 {...register("email", {
                                     required: true,

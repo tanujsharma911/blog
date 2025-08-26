@@ -30,7 +30,7 @@ function App() {
   ) : (
     <div className="">
       <Header />
-      <div className="min-h-screen">
+      <div className="max-w-screen-xl mx-auto min-h-screen">
 
         {<Outlet />}
       </div>

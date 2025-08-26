@@ -1,7 +1,7 @@
-import { Link } from 'react'
+import { Link } from 'react-router'
 import appwriteService from '../appwrite/conf'
 
-function PostCard({ $id, thumbnail, title, content }) {
+function PostCard({ $id, thumbnail, title }) {
     return (
         <Link to={`/post/${$id}`}>
             <div className="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
@@ -10,9 +10,6 @@ function PostCard({ $id, thumbnail, title, content }) {
                     <h3 className="text-lg font-bold text-gray-800 dark:text-white">
                         {title}
                     </h3>
-                    <p className="mt-1 text-gray-500 dark:text-neutral-400">
-                        {content.length > 60 ? content.slice(0, 60) : content}
-                    </p>
                 </div>
             </div>
         </Link>

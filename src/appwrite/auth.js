@@ -50,11 +50,24 @@ export class AuthService {
     async checkAuthStatus() {
         try {
             // If successful, user is authenticated
-            const user = await this.account.get();
-            return user;
+            // return await this.account.get();
             // Proceed with your authenticated app flow
+
+            const sessions = await this.account.listSessions();
+
+            if (sessions.sessions && sessions.sessions.length > 0) {
+                // Active session exists, safe to get user details
+                return await this.account.get();
+            } else {
+                // No active session, user not logged in
+                return null;
+            }
         } catch (error) {
-            console.error("User is not authenticated:", error);
+            if (error.code === 401) {
+                // User is not authenticated
+                return null;
+            }
+            console.error("Appwrite Auth :: checkAuthStatus", error);
             // Redirect to login page or show login UI
             // window.location.href = '/login';
             return null;

@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Input } from "../Input";
+import Input from "../Input";
 import Select from "../Select";
 import RTE from '../RTE'
 import appwriteService from '../../appwrite/conf'
@@ -15,10 +15,12 @@ function PostForm({ post }) {
         status: post?.status || 'active',
     });
     const navigate = useNavigate();
-    const userData = useSelector(state => state.user.userData);
+    const userData = useSelector(state => state.auth.userData);
 
     const submit = async (data) => {
-        if (post) {
+        console.log("data", data);
+        console.log("post", post);
+        if (post) { // Update article
             const file = data.image[0] ? appwriteService.uploadFile(data.image[0]) : null;
 
             if (file) {
@@ -31,20 +33,20 @@ function PostForm({ post }) {
             if (dbPost) {
                 navigate(`/post/${dbPost.$id}`);
             }
-            else {
-                const file = await appwriteService.uploadFile(data.image[0]);
+        }
+        else {  // Create article
+            const file = await appwriteService.uploadFile(data.image[0]);
 
-                if (file) {
-                    const fileId = file.$id;
-                    data.thumbnail = fileId;
-                    const dbPost = await appwriteService.createPost({
-                        ...data,
-                        userId: userData.$id
-                    })
+            if (file) {
+                const fileId = file.$id;
+                data.thumbnail = fileId;
+                const dbPost = await appwriteService.createPost({
+                    ...data,
+                    userId: userData.$id
+                })
 
-                    if (dbPost) {
-                        navigate(`/post/${dbPost.$id}`);
-                    }
+                if (dbPost) {
+                    navigate(`/post/${dbPost.$id}`);
                 }
             }
         }
@@ -55,8 +57,8 @@ function PostForm({ post }) {
             return value
                 .trim()
                 .toLowerCase()
-                .replace(/^[a-zA-Z\d\s]+/g, '-')
-                .replace(/\s/g, '-')
+                .replace(/[^a-zA-Z\d\s]+/g, "-")
+                .replace(/\s/g, "-");
         }
 
         return '';
