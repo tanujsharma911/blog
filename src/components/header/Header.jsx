@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router";
 
-import LogoutBtn from "./logoutBtn"
+import LogoutBtn from "../logoutBtn"
 
 function Header() {
     // let location = useLocation();
