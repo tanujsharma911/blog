@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
 function PostForm({ post }) {
-    const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
+    const { register, handleSubmit, watch, setValue, control } = useForm({
         title: post?.title || '',
         slug: post?.slug || '',
         content: post?.content || '',
@@ -18,36 +18,24 @@ function PostForm({ post }) {
     const userData = useSelector(state => state.auth.userData);
 
     const submit = async (data) => {
-        console.log("data", data);
-        console.log("post", post);
         if (post) { // Update article
-            const file = data.image[0] ? appwriteService.uploadFile(data.image[0]) : null;
-
-            if (file) {
-                appwriteService.deleteFile(post.thumbnail);
-            }
             const dbPost = await appwriteService.updatePost(post.$id, {
                 ...data,
-                thumbnail: file ? file.$id : undefined
             })
             if (dbPost) {
                 navigate(`/post/${dbPost.$id}`);
             }
         }
         else {  // Create article
-            const file = await appwriteService.uploadFile(data.image[0]);
 
-            if (file) {
-                const fileId = file.$id;
-                data.thumbnail = fileId;
-                const dbPost = await appwriteService.createPost({
-                    ...data,
-                    userId: userData.$id
-                })
+            const dbPost = await appwriteService.createPost({
+                ...data,
+                userId: userData.$id,
+                createdBy: userData.name || userData.email,
+            })
 
-                if (dbPost) {
-                    navigate(`/post/${dbPost.$id}`);
-                }
+            if (dbPost) {
+                navigate(`/post/${dbPost.$id}`);
             }
         }
     }
@@ -78,44 +66,35 @@ function PostForm({ post }) {
 
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-            <div className="w-2/3 px-2">
-                <Input className="mb-4"
-                    label="Title"
+            <div className="w-full">
+                <input className="w-full text-4xl font-bold mb-4 focus-within:ring-0 focus:ring-0 focus:ring-offset-0 focus:outline-0"
                     placeholder="Title"
+                    maxLength={36}
+                    defaultValue={post?.title ? post.title : ''}
                     {...register("title", { required: true })}
                 />
-                <Input className="mb-4"
-                    label="Slug"
-                    placeholder="Slug"
-                    {...register("slug", { required: true })}
-                    onInput={(e) => {
-                        setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
-                    }}
-                />
-                <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
-            </div>
-            <div className="w-1/3 px-2">
-                <Input
-                    label="Thumbnail"
-                    type="file"
-                    className="mb-4"
-                    accept="image/png, image/jpg, image/jpeg, image/gif"
-                    {...register("image", { required: !post })}
-                />
-                {post && (
-                    <div className="w-full mb-4">
-                        <img className="rounded-lg"
-                            src={appwriteService.getFilePreview(post.thumbnail)}
-                            alt={post.title}
-                        />
-                    </div>
-                )}
-                <Select className="mb-4"
+                <div className="flex">
+                    <label htmlFor="slug" className="font-mono">/post/</label>
+                    <input className="font-mono mb-4 focus-within:ring-0 focus:ring-0 focus:ring-offset-0 focus:outline-0"
+                        placeholder="url"
+                        id="slug"
+                        defaultValue={post?.$id ? post.$id : ''}
+                        {...register("slug", { required: true })}
+                        onInput={(e) => {
+                            setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
+                        }}
+                        disabled
+                    />
+                </div>
+                <RTE label="" name="content" control={control} defaultValue={post ? post?.content : ''} className="w-full" />
+
+                <Select className=""
                     options={["active", "inactive"]}
-                    label="Status"
+                    label="Visible"
+                    defaultValue={post?.status ? post?.status : 'active'}
                     {...register("status", { required: true })}
                 />
-                <button type="submit" className={`w-full $`}>
+                <button type="submit" className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
                     {post ? "Update" : "Submit"}
                 </button>
             </div>

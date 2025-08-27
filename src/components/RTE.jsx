@@ -16,7 +16,6 @@ function RTE({ name, control, label, defaultValue = "" }) {
                         initialValue={defaultValue}
                         init={{
                             initialValue: defaultValue,
-                            height: 500,
                             menubar: true,
                             plugins: [
                                 'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',

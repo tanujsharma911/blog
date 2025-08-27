@@ -15,6 +15,7 @@ import AddPost from './pages/AddPost.jsx'
 import EditPost from './pages/EditPost.jsx'
 import { RouterProvider } from 'react-router'
 import { AuthLayout } from './components/index.js'
+import Account from './pages/Account.jsx'
 
 const router = createBrowserRouter([
   {
@@ -42,20 +43,29 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/blogs",
-        element: (
-          <AuthLayout authenticationRequired>
-            {" "}
-            <AllPosts />
-          </AuthLayout>
-        ),
-      },
-      {
         path: "/create-article",
         element: (
           <AuthLayout authenticationRequired>
             {" "}
             <AddPost />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/account",
+        element: (
+          <AuthLayout authenticationRequired>
+            {" "}
+            <Account />
+          </AuthLayout>
+        ),
+      },
+      {
+        path: "/account/blogs",
+        element: (
+          <AuthLayout authenticationRequired>
+            {" "}
+            <AllPosts />
           </AuthLayout>
         ),
       },

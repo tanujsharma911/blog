@@ -42,8 +42,11 @@ export class AuthService {
             return session;
         }
         catch (error) {
-            console.error("Appwrite services :: login", error);
-            throw error;
+            console.error("Appwrite services :: login", error.code);
+
+            if (error.code === 400) {
+                console.error("Invalid credentials");
+            }
         }
     }
 

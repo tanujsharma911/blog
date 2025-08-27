@@ -1,10 +1,9 @@
 import config from "../config/config";
-import { Client, ID, Databases, Storage, Query } from "appwrite";
+import { Client, ID, Databases, Query } from "appwrite";
 
 class Service {
     client = new Client;
     databases;
-    storage;
 
     constructor() {
         this.client
@@ -12,11 +11,10 @@ class Service {
             .setProject(config.appwriteProjectId);
 
         this.databases = new Databases(this.client);
-        this.storage = new Storage(this.client);
     }
 
     // Post Services
-    async createPost({ title, slug, content, thumbnail, status, userId }) {
+    async createPost({ title, slug, content, status, userId, createdBy }) {
         try {
             return await this.databases.createDocument(
                 config.appwriteDatabaseId, // databaseId
@@ -25,9 +23,9 @@ class Service {
                 {
                     title,
                     content, // HTML
-                    thumbnail, // File id
                     status,
-                    userId
+                    userId,
+                    createdBy
                 }, // data
             );
         } catch (error) {
@@ -36,14 +34,14 @@ class Service {
         }
     }
 
-    async updatePost(slug, { title, content, thumbnail, status }) {
+    async updatePost(slug, { title, content, status }) {
         try {
             return await this.databases.updateDocument(
                 config.appwriteDatabaseId, // databaseId
                 config.appwriteCollectionId, // collectionId
                 slug, // documentId
                 {
-                    title, content, thumbnail, status
+                    title, content, status
                 }, // data (optional)
             );
         } catch (error) {
@@ -79,7 +77,8 @@ class Service {
         }
     }
 
-    async getPosts(queries = [Query.equal('status', 'active')]) {
+    async getPosts(queries) {
+        queries = queries ? queries : [Query.equal('status', 'active')];
         try {
             return await this.databases.listDocuments(
                 config.appwriteDatabaseId, // databaseId
@@ -90,41 +89,6 @@ class Service {
             console.log("Appwrite services :: getAllPost", error);
             return null;
         }
-    }
-
-    // File Services
-    async uploadFile(file) {
-        try {
-            return await this.storage.createFile( // return file id
-                config.appwriteBucketId,
-                ID.unique(),
-                file
-            );
-        } catch (error) {
-            console.log("Appwrite services :: upload file", error);
-            return false;
-        }
-    }
-
-    async deleteFile(fileId) {
-        try {
-            await this.storage.deleteFile(
-                config.appwriteBucketId, // bucketId
-                fileId // fileId
-            );
-
-            return true;
-        } catch (error) {
-            console.log("Appwrite services :: delete file", error);
-            return false;
-        }
-    }
-
-    getFilePreview(fileId) {
-        return this.storage.getFileView(
-            config.appwriteBucketId, // bucketId
-            fileId, // fileId
-        );
     }
 
 }

@@ -20,7 +20,7 @@ function App() {
         }
       })
       .finally(() => setLoading(false));
-  })
+  }, [dispatch])
 
 
   return loading ? (
@@ -30,10 +30,11 @@ function App() {
   ) : (
     <div className="">
       <Header />
-      <div className="max-w-screen-xl mx-auto min-h-screen">
 
-        {<Outlet />}
+      <div className="my-30 px-5 md:px-10 lg:max-w-4xl mx-auto">
+        <Outlet />
       </div>
+
       <Footer />
     </div>
   )
