@@ -2,7 +2,8 @@ import { useDispatch } from "react-redux"
 import { useState, useEffect } from "react";
 import authService from "./appwrite/auth";
 import { login, logout } from "./store/authSlice";
-import { Header, Footer } from "./components";
+import { Footer } from "./components";
+import Header from "./components/Header";
 import { Outlet } from "react-router";
 
 function App() {

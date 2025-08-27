@@ -1,4 +1,4 @@
-import Header from './Header/Header.jsx'
+// import Header from './header/header.jsx'
 import Footer from './footer/Footer.jsx'
 import LogoutBtn from './Header/LogoutBtn.jsx'
 import Signup from './Signup.jsx'
@@ -10,7 +10,7 @@ import AuthLayout from './AuthLayout.jsx'
 import Select from './Select.jsx'
 
 export {
-    Header,
+    // Header,
     Footer,
     RTE,
     AuthLayout,
