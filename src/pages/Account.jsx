@@ -1,5 +1,5 @@
 
-import { LogoutBtn } from '../components/Header/LogoutBtn.jsx'
+import LogoutBtn from '../components/LogoutBtn.jsx'
 import { useSelector } from 'react-redux';
 
 function Account() {

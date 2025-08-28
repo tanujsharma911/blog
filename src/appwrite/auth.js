@@ -70,7 +70,7 @@ export class AuthService {
                 // User is not authenticated
                 return null;
             }
-            console.error("Appwrite Auth :: checkAuthStatus", error);
+            console.log("No session found", error);
             // Redirect to login page or show login UI
             // window.location.href = '/login';
             return null;

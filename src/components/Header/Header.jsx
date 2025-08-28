@@ -1,8 +1,6 @@
 import { useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router";
 
-import LogoutBtn from "../logoutBtn"
-
 function Header() {
     // let location = useLocation();
     const authStatus = useSelector(state => state.auth.status);

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import authService from "./appwrite/auth";
 import { login, logout } from "./store/authSlice";
 import { Footer } from "./components";
-import Header from "./components/Header/index.jsx";
+import Header from "./components/Header/Header.jsx";
 import { Outlet } from "react-router";
 
 function App() {
