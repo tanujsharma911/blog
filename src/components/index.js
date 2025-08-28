@@ -1,6 +1,5 @@
 // import Header from './header/header.jsx'
 import Footer from './footer/Footer.jsx'
-import LogoutBtn from './Header/LogoutBtn.jsx'
 import Signup from './Signup.jsx'
 import Login from './Login.jsx'
 import PostForm from './post-form/PostForm.jsx'
@@ -19,5 +18,4 @@ export {
     Select,
     PostForm,
     PostCard,
-    LogoutBtn
 }
