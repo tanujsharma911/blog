@@ -61,15 +61,6 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/account/blogs",
-        element: (
-          <AuthLayout authenticationRequired>
-            {" "}
-            <AllPosts />
-          </AuthLayout>
-        ),
-      },
-      {
         path: "/edit-post/:slug",
         element: (
           <AuthLayout authenticationRequired>

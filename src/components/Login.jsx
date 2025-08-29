@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form'
 function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors }, } = useForm();
     const [error, setError] = useState("");
 
     const login = async (data) => {
@@ -40,7 +40,7 @@ function Login() {
                 <form onSubmit={handleSubmit(login)} className="mt-8 mx-auto mb-2 w-sm">
                     <div className="mb-1 flex flex-col gap-6">
                         <div className="w-full max-w-sm min-w-[200px]">
-                            <Input className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                            <Input
                                 label="Your Email"
                                 type="email"
                                 placeholder="hello@email.com"
@@ -54,8 +54,9 @@ function Login() {
                                 })}
                             />
                         </div>
+
                         <div className="w-full max-w-sm min-w-[200px]">
-                            <Input className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+                            <Input
                                 label="Password"
                                 type="password"
                                 placeholder="******"
@@ -65,6 +66,7 @@ function Login() {
                                     maxLength: 32
                                 })}
                             />
+                            {errors.password && <p className='mt-1'>Minimum 6 characters required</p>}
                         </div>
                     </div>
 

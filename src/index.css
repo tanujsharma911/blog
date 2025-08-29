@@ -2,7 +2,12 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Headings */
+/* Global */
+a {
+  cursor: pointer;
+}
+
+/* Blog reander */
 #blog_content h1 {
   font-size: 2.5rem;
   font-weight: 700;

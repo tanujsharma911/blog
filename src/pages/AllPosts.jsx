@@ -26,7 +26,7 @@ function AllPost() {
     return loading ? (
         <div className='text-center mt-10'>Loading...</div>
     ) : posts.length ? (
-        <div className='max-w-screen-xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+        <div className='max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
 
             {posts.map((post) => (
                 <PostCard key={post.$id} {...post} />

@@ -3,12 +3,16 @@ import { Link, useNavigate, useParams } from "react-router";
 import appwriteService from "../appwrite/conf";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
-// import { UserRound } from 'lucide-react';
+import { UserRound, Calendar } from 'lucide-react';
 
 export default function Post() {
     const [post, setPost] = useState(null);
     const { slug } = useParams();
     const navigate = useNavigate();
+    const [formattedDate, setFormattedDate] = useState("");
+
+    // Define an array of abbreviated month names.
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     const userData = useSelector((state) => state.auth.userData);
 
@@ -21,6 +25,23 @@ export default function Post() {
                 .then((post) => {
                     if (post) {
                         setPost(post);
+
+                        const originalString = post.$createdAt;
+                        console.log(originalString)
+
+                        if (originalString) {
+
+                            // 2. Create a Date object from the ISO string.
+                            const dateObject = new Date(originalString);
+
+                            // 4. Get the day, month, and year from the Date object.
+                            const day = dateObject.getDate();
+                            const month = monthNames[dateObject.getMonth()]; // getMonth() returns a 0-indexed number
+                            const year = dateObject.getFullYear();
+
+                            // 5. Format and combine into the desired string.
+                            setFormattedDate(`${day} ${month} ${year}`)
+                        }
                     }
                     else {
                         console.log("No post found", post);
@@ -43,7 +64,10 @@ export default function Post() {
         <div className="">
             <div className="w-full mb-6">
                 <h1 className="text-5xl font-bold">{post.title}</h1>
-                <p className="mt-2 ml-2">Created By {post.createdBy}</p>
+                <div className="mt-2 flex text-gray-500">
+                    <p className="mt-2 ml-2 flex items-center"><UserRound size={18} className="mr-2" /> {post.createdBy}</p>
+                    <p className="mt-2 ml-8 flex items-center"><Calendar size={18} className="mr-2" /> {formattedDate}</p>
+                </div>
             </div>
             <div className="browser-css" id="blog_content">
                 {parse(post.content)}

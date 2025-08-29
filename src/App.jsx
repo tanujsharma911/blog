@@ -25,8 +25,8 @@ function App() {
 
 
   return loading ? (
-    <div className="flex justify-center">
-      loading
+    <div className="flex justify-center mt-10">
+      loading...
     </div>
   ) : (
     <div className="">
