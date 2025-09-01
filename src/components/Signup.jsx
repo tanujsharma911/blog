@@ -5,12 +5,13 @@ import Input from './Input'
 import { Link, useNavigate } from 'react-router'
 import { login } from '../store/authSlice'
 import { useDispatch } from 'react-redux'
+// import { stringify } from 'postcss'
 
 function Signup() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, formState: { errors }, } = useForm();
 
     const create = async (data) => {
         setError("");
@@ -43,8 +44,8 @@ function Signup() {
                                 label="Full Name"
                                 type="text"
                                 placeholder="Your Full Name"
-                                required={true}
-                                {...register("name", { required: true })}
+                                {...register("name", { required: "Please type your name" })}
+                                error={errors}
                             />
                         </div>
                         <div className="w-full max-w-sm min-w-[200px]">
@@ -52,14 +53,14 @@ function Signup() {
                                 label="Your Email"
                                 type="email"
                                 placeholder="name@email.com"
-                                required={true}
                                 {...register("email", {
-                                    required: true,
+                                    required: "Please enter your email",
                                     validate: {
                                         matchPattern: (value) => /^([\w.\-_]+)?\w+@[\w-_]+(\.\w+){1,}$/
                                             .test(value) || "Email must be valid"
                                     }
                                 })}
+                                error={errors}
                             />
                         </div>
                         <div className="w-full max-w-sm min-w-[200px]">
@@ -67,12 +68,14 @@ function Signup() {
                                 label="Password"
                                 type="password"
                                 placeholder="******"
-                                required={true}
                                 {...register("password", {
+                                    required: "Password is Required",
                                     minLength: 6,
                                     maxLength: 32
                                 })}
+                                error={errors}
                             />
+                            {/* {errors.password && <p>{errors.password?.message}</p>} */}
                         </div>
                     </div>
 

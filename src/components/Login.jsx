@@ -44,14 +44,14 @@ function Login() {
                                 label="Your Email"
                                 type="email"
                                 placeholder="hello@email.com"
-                                required={true}
                                 {...register("email", {
-                                    required: true,
+                                    required: "Please type your email",
                                     validate: {
                                         matchPattern: (value) => /^([\w.\-_]+)?\w+@[\w-_]+(\.\w+){1,}$/
                                             .test(value) || "Email must be valid"
                                     }
                                 })}
+                                error={errors}
                             />
                         </div>
 
@@ -60,13 +60,13 @@ function Login() {
                                 label="Password"
                                 type="password"
                                 placeholder="******"
-                                required={true}
                                 {...register("password", {
+                                    required: "Password is required",
                                     minLength: 6,
                                     maxLength: 32
                                 })}
+                                error={errors}
                             />
-                            {errors.password && <p className='mt-1'>Minimum 6 characters required</p>}
                         </div>
                     </div>
 
