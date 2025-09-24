@@ -1,6 +1,6 @@
 # Blog 
 
-[Live Demo (Coming Soon)](#)
+[Live Demo](https://blog-tanuj.vercel.app/)
 
 ## Overview
 
